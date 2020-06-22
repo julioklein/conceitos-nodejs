@@ -33,7 +33,21 @@ app.post("/repositories", (request, response) => {
 });
 
 app.put("/repositories/:id", (request, response) => {
-  // TODO
+  // DONE
+  const { id } = request.params;
+  const { title, url, techs } = request.body;
+
+  const project = repositories.find(project => project.id === id);
+
+  if(!project) {
+    return response.status(400).json({error: "Invalid Project ID"});
+  }
+
+  project.title = title;
+  project.url = url;
+  project.techs = techs;
+
+  return response.json(project);
 });
 
 app.delete("/repositories/:id", (request, response) => {
