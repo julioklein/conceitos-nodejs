@@ -40,7 +40,7 @@ app.put("/repositories/:id", (request, response) => {
   const project = repositories.find(project => project.id === id);
 
   if(!project) {
-    return response.status(400).json({error: "Invalid Project ID"});
+    return response.status(400).json({ error: "Invalid Project ID" });
   }
 
   project.title = title;
@@ -51,7 +51,18 @@ app.put("/repositories/:id", (request, response) => {
 });
 
 app.delete("/repositories/:id", (request, response) => {
-  // TODO
+  // DONE
+  const { id } = request.params;
+
+  const projectIndex = repositories.findIndex(project => project.id === id);
+
+  if(projectIndex < 0) {
+    return response.status(400).json({ error: "Invalid Project ID." });
+  }
+
+  repositories.splice(projectIndex, 1);
+
+  response.status(204).send();
 });
 
 app.post("/repositories/:id/like", (request, response) => {
