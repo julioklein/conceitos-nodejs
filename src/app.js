@@ -66,7 +66,18 @@ app.delete("/repositories/:id", (request, response) => {
 });
 
 app.post("/repositories/:id/like", (request, response) => {
-  // TODO
+  // DONE
+  const { id } = request.params;
+
+  const project = repositories.find(project => project.id === id);
+
+  if(!project) {
+    return response.status(400).json({ error: "Invalid Project ID." });
+  }
+
+  project.likes += 1;
+
+  return response.json(project);
 });
 
 module.exports = app;
